@@ -31,19 +31,20 @@ steps:
   depends_on:
   - lint
   - sonarqube
-# - name: publish
-#   image: plugins/github-release
-#   settings:
-#     api_key:
-#       from_secret: github_access_token
-#     files: dist/*
-#     checksum:
-#     - sha256
-#     prerelease: true
-#   depends_on:
-#   - build
-#   when:
-#     event: tag
+- name: publish
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_access_token
+    files: dist/*
+    checksum:
+    - sha256
+    title: ${DRONE_TAG}
+    prerelease: true
+  depends_on:
+  - build
+  when:
+    event: tag
 
 volumes:
 - name: go-pkg-mod
