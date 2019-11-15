@@ -20,7 +20,9 @@ Download binary from our [releases](https://github.com/acim/github-latest/releas
 
 ## Usage
 
-github-latest owner/repo major
+github-latest owner/repo [major]
+
+major parameter is optional
 
 ## Example
 

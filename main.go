@@ -15,18 +15,18 @@ import (
 )
 
 func main() {
-	owner, repo, major := parseArgs()
+	args := parseArgs()
 
 	client := github.NewClient(httpClient())
 
-	rels, res, err := client.Repositories.ListReleases(context.TODO(), owner, repo, nil)
+	rels, res, err := client.Repositories.ListReleases(context.TODO(), args.owner, args.repo, nil)
 	if err != nil {
 		if res.StatusCode == http.StatusNotFound {
-			fmt.Printf("Repository %s/%s not found\n", owner, repo)
+			fmt.Printf("Repository %s/%s not found\n", args.owner, args.repo)
 			os.Exit(1)
 		}
 
-		fmt.Printf("%#v\n", err)
+		fmt.Printf("Error: %v", err)
 		os.Exit(1)
 	}
 
@@ -39,7 +39,7 @@ func main() {
 			continue
 		}
 
-		if v.Segments()[0] != major || v.Prerelease() != "" {
+		if args.major != nil && (v.Segments()[0] != *args.major || v.Prerelease() != "") {
 			continue
 		}
 
@@ -49,36 +49,49 @@ func main() {
 	sort.Sort(version.Collection(versions))
 
 	if len(versions) == 0 {
-		fmt.Printf("No major %d versions found\n", major)
+		fmt.Println("No releases found")
 		os.Exit(1)
 	}
 
 	fmt.Println(versions[len(versions)-1])
 }
 
-func parseArgs() (string, string, int) {
-	args := os.Args[1:]
+func parseArgs() args {
+	as := os.Args[1:]
 
-	if len(args) != 2 {
+	if len(as) == 0 {
 		help()
 	}
 
-	parts := strings.Split(args[0], "/")
+	parts := strings.Split(as[0], "/")
 	if len(parts) != 2 {
 		help()
 	}
 
-	m, err := strconv.Atoi(args[1])
+	if len(as) == 1 {
+		return args{
+			owner: parts[0],
+			repo:  parts[1],
+			major: nil,
+		}
+	}
+
+	m, err := strconv.Atoi(as[1])
 	if err != nil {
 		help()
 	}
 
-	return parts[0], parts[1], m
+	return args{
+		owner: parts[0],
+		repo:  parts[1],
+		major: &m,
+	}
 }
 
 func help() {
-	e := fmt.Sprintf("Example: %s %s %d", os.Args[0], "helm/helm", 2)
-	fmt.Printf("Usage: %s %s %s\n\t%s\n", os.Args[0], "owner/repo", "major", e)
+	e := fmt.Sprintf("Examples:\t%s %s %d\n", os.Args[0], "helm/helm", 2)
+	e += fmt.Sprintf("\t\t%s %s", os.Args[0], "starship/starship")
+	fmt.Printf("Usage:\t\t%s %s [%s]\n%s\n", os.Args[0], "owner/repo", "major", e)
 	os.Exit(1)
 }
 
@@ -94,4 +107,10 @@ func httpClient() *http.Client {
 	)
 
 	return oauth2.NewClient(ctx, ts)
+}
+
+type args struct {
+	owner string
+	repo  string
+	major *int
 }
