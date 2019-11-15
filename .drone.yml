@@ -1,0 +1,30 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: lint
+  image: golangci/golangci-lint:latest-alpine
+  commands:
+  - golangci-lint run --enable-all
+- name: test
+  image: golang:1-alpine
+  commands:
+  - CGO_ENABLED=0 go test -json -coverprofile=coverage.out ./... >tests.json
+  volumes:
+  - name: go-pkg-mod
+    path: /go/pkg/mod
+- name: sonarqube
+  image: aosapps/drone-sonar-plugin
+  settings:
+    sonar_host: https://sonarqube.ablab.de
+    sonar_token:
+      from_secret: sonarqube_token
+  depends_on:
+  - test
+
+  volumes:
+- name: go-pkg-mod
+  host:
+    path: /tmp/cache/${DRONE_REPO}/go-pkg-mod

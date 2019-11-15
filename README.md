@@ -1,6 +1,15 @@
 # github-latest
 
-Small utility to find out the latest release of a repository on GitHub
+[![GitHub](https://img.shields.io/github/license/acim/github-latest)](LICENSE)
+[![Build Status](https://drone.ablab.de/api/badges/acim/github-latest/status.svg)](https://drone.ablab.de/acim/github-latest)
+
+Small utility to find out the latest release of a GitHub repository.
+
+## Install
+
+``` bash
+go get -u github.com/acim/github-latest
+```
 
 ## Usage
 
