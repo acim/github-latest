@@ -7,7 +7,7 @@ steps:
 - name: lint
   image: golangci/golangci-lint:latest-alpine
   commands:
-  - golangci-lint run --enable-all
+  - golangci-lint run --enable-all --disable prealloc
 - name: test
   image: golang:1-alpine
   commands:

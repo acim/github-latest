@@ -25,6 +25,7 @@ func main() {
 			fmt.Printf("Repository %s/%s not found\n", owner, repo)
 			os.Exit(1)
 		}
+
 		fmt.Printf("%#v\n", err)
 		os.Exit(1)
 	}
@@ -91,5 +92,6 @@ func httpClient() *http.Client {
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: t},
 	)
+
 	return oauth2.NewClient(ctx, ts)
 }
