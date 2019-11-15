@@ -23,6 +23,27 @@ steps:
       from_secret: sonarqube_token
   depends_on:
   - test
+- name: build
+  image: golang:1-alpine
+  commands:
+  - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-s -w" -o dist/github-latest
+  - env
+  depends_on:
+  - lint
+  - sonarqube
+# - name: publish
+#   image: plugins/github-release
+#   settings:
+#     api_key:
+#       from_secret: github_access_token
+#     files: dist/*
+#     checksum:
+#     - sha256
+#     prerelease: true
+#   depends_on:
+#   - build
+#   when:
+#     event: tag
 
 volumes:
 - name: go-pkg-mod

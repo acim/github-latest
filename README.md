@@ -2,6 +2,7 @@
 
 [![GitHub](https://img.shields.io/github/license/acim/github-latest)](LICENSE)
 [![Build Status](https://drone.ablab.de/api/badges/acim/github-latest/status.svg)](https://drone.ablab.de/acim/github-latest)
+[![Quality Gate Status](https://sonarqube.ablab.de/api/project_badges/measure?project=acim%3Agithub-latest&metric=alert_status)](https://sonarqube.ablab.de/dashboard?id=acim%3Agithub-latest)
 
 Small utility to find out the latest release of a GitHub repository.
 
