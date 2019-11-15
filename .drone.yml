@@ -24,7 +24,7 @@ steps:
   depends_on:
   - test
 
-  volumes:
+volumes:
 - name: go-pkg-mod
   host:
     path: /tmp/cache/${DRONE_REPO}/go-pkg-mod
