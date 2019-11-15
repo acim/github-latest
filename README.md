@@ -6,11 +6,17 @@
 
 Small utility to find out the latest release of a GitHub repository.
 
-## Install
+## Installation
+
+### From source
 
 ``` bash
 go get -u github.com/acim/github-latest
 ```
+
+### Binary release (Linux and macOS)
+
+Download binary from our [releases](https://github.com/acim/github-latest/releases).
 
 ## Usage
 
