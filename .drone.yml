@@ -40,7 +40,6 @@ steps:
     checksum:
     - sha256
     title: ${DRONE_TAG}
-    prerelease: true
   depends_on:
   - build
   when:
