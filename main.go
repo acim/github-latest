@@ -30,7 +30,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	var versions []*version.Version
+	versions := make([]*version.Version, 0, len(rels))
 
 	for _, rel := range rels {
 		v, err := version.NewVersion(*rel.TagName)
