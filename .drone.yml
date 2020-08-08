@@ -6,7 +6,7 @@ steps:
   - name: lint
     image: golangci/golangci-lint:latest-alpine
     commands:
-      - golangci-lint run --enable-all --disable errcheck --disable gomnd
+      - golangci-lint run --enable-all
   - name: test-build
     image: golang:1-alpine
     commands:

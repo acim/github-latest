@@ -36,10 +36,12 @@ func main() {
 		v, err := version.NewVersion(*rel.TagName)
 		if err != nil {
 			fmt.Printf("error parsing tag %s\n", *rel.TagName)
+
 			continue
 		}
 
 		if args.major != nil && (v.Segments()[0] != *args.major || v.Prerelease() != "") {
+
 			continue
 		}
 
