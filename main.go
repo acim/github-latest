@@ -41,7 +41,6 @@ func main() {
 		}
 
 		if args.major != nil && (v.Segments()[0] != *args.major || v.Prerelease() != "") {
-
 			continue
 		}
 
