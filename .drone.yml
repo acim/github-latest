@@ -1,51 +1,14 @@
----
 kind: pipeline
-type: docker
-name: default
+type: kubernetes
+name: backend
 
 steps:
-- name: lint
-  image: golangci/golangci-lint:latest-alpine
-  commands:
-  - golangci-lint run --enable-all --disable prealloc
-- name: test
-  image: golang:1-alpine
-  commands:
-  - CGO_ENABLED=0 go test -json -coverprofile=coverage.out ./... >tests.json
-  volumes:
-  - name: go-pkg-mod
-    path: /go/pkg/mod
-- name: sonarqube
-  image: aosapps/drone-sonar-plugin
-  settings:
-    sonar_host: https://sonarqube.ablab.de
-    sonar_token:
-      from_secret: sonarqube_token
-  depends_on:
-  - test
-- name: build
-  image: golang:1-alpine
-  commands:
-  - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-s -w" -o dist/github-latest_linux_amd64
-  - CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-s -w" -o dist/github-latest_darwin_amd64
-  depends_on:
-  - lint
-  - sonarqube
-- name: publish
-  image: plugins/github-release
-  settings:
-    api_key:
-      from_secret: github_access_token
-    files: dist/*
-    checksum:
-    - sha256
-    title: ${DRONE_TAG}
-  depends_on:
-  - build
-  when:
-    event: tag
-
-volumes:
-- name: go-pkg-mod
-  host:
-    path: /tmp/cache/${DRONE_REPO}/go-pkg-mod
+  - name: lint
+    image: golangci/golangci-lint:latest-alpine
+    commands:
+      - golangci-lint run --enable-all --disable errcheck --disable gomnd
+  - name: test-build
+    image: golang:1-alpine
+    commands:
+      - CGO_ENABLED=0 go test -json -coverprofile=coverage.out ./... >tests.json
+      - CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags="-s -w" .
