@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/google/go-github/v28/github"
+	"github.com/google/go-github/v32/github"
 	"github.com/hashicorp/go-version"
 	"golang.org/x/oauth2"
 )
