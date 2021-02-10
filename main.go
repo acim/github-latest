@@ -22,11 +22,11 @@ func main() {
 	rels, res, err := client.Repositories.ListReleases(context.TODO(), args.owner, args.repo, nil)
 	if err != nil {
 		if res.StatusCode == http.StatusNotFound {
-			fmt.Printf("Repository %s/%s not found\n", args.owner, args.repo)
+			fmt.Printf("Repository %s/%s not found\n", args.owner, args.repo) //nolint:forbidigo
 			os.Exit(1)
 		}
 
-		fmt.Printf("Error: %v", err)
+		fmt.Printf("Error: %v", err) //nolint:forbidigo
 		os.Exit(1)
 	}
 
@@ -35,7 +35,7 @@ func main() {
 	for _, rel := range rels {
 		v, err := version.NewVersion(*rel.TagName)
 		if err != nil {
-			fmt.Printf("error parsing tag %s\n", *rel.TagName)
+			fmt.Printf("error parsing tag %s\n", *rel.TagName) //nolint:forbidigo
 
 			continue
 		}
@@ -50,11 +50,11 @@ func main() {
 	sort.Sort(version.Collection(versions))
 
 	if len(versions) == 0 {
-		fmt.Println("No releases found")
+		fmt.Println("No releases found") //nolint:forbidigo
 		os.Exit(1)
 	}
 
-	fmt.Println(versions[len(versions)-1])
+	fmt.Println(versions[len(versions)-1]) //nolint:forbidigo
 }
 
 func parseArgs() args {
@@ -65,7 +65,7 @@ func parseArgs() args {
 	}
 
 	parts := strings.Split(as[0], "/")
-	if len(parts) != 2 {
+	if len(parts) != 2 { //nolint:gomnd
 		help()
 	}
 
@@ -92,7 +92,7 @@ func parseArgs() args {
 func help() {
 	e := fmt.Sprintf("Examples:\t%s %s %d\n", os.Args[0], "helm/helm", 2)
 	e += fmt.Sprintf("\t\t%s %s", os.Args[0], "starship/starship")
-	fmt.Printf("Usage:\t\t%s %s [%s]\n%s\n", os.Args[0], "owner/repo", "major", e)
+	fmt.Printf("Usage:\t\t%s %s [%s]\n%s\n", os.Args[0], "owner/repo", "major", e) //nolint:forbidigo
 	os.Exit(1)
 }
 
@@ -104,7 +104,7 @@ func httpClient() *http.Client {
 
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: t},
+		&oauth2.Token{AccessToken: t}, //nolint:exhaustivestruct
 	)
 
 	return oauth2.NewClient(ctx, ts)
