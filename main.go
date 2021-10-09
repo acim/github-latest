@@ -90,7 +90,7 @@ func parseArgs() args {
 }
 
 func help() {
-	e := fmt.Sprintf("Examples:\t%s %s %d\n", os.Args[0], "helm/helm", 2)
+	e := fmt.Sprintf("Examples:\t%s %s %d\n", os.Args[0], "helm/helm", 2) //nolint:gomnd
 	e += fmt.Sprintf("\t\t%s %s", os.Args[0], "starship/starship")
 	fmt.Printf("Usage:\t\t%s %s [%s]\n%s\n", os.Args[0], "owner/repo", "major", e) //nolint:forbidigo
 	os.Exit(1)
