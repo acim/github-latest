@@ -13,7 +13,7 @@ Small utility to find out the latest release of a GitHub repository.
 ### From source
 
 ```bash
-go get -u github.com/acim/github-latest
+go install github.com/acim/github-latest@latest
 ```
 
 ### [Binary releases](https://github.com/acim/github-latest/releases)
