@@ -2,6 +2,7 @@
 
 lint:
 	@golint ./...
+	@go vet ./...
 	@golangci-lint run --enable-all
 
 test:

@@ -21,12 +21,14 @@ jobs:
             ${{ runner.os }}-go-
       - name: Set up linters
         run: |
-          GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint
-          go get -u golang.org/x/lint/golint
+          go install golang.org/x/lint/golint@latest
+          go install github.com/sonatype-nexus-community/nancy@latest
+          go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
       - name: Check out
         uses: actions/checkout@v2
       - name: Lint
         run: |
+          go list -json -m all | nancy sleuth
           make lint
       - name: Build
         run: |
