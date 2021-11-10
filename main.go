@@ -33,18 +33,18 @@ func main() {
 	versions := make([]*version.Version, 0, len(rels))
 
 	for _, rel := range rels {
-		v, err := version.NewVersion(*rel.TagName)
+		ver, err := version.NewVersion(*rel.TagName)
 		if err != nil {
 			fmt.Printf("error parsing tag %s\n", *rel.TagName) //nolint:forbidigo
 
 			continue
 		}
 
-		if args.major != nil && (v.Segments()[0] != *args.major || v.Prerelease() != "") {
+		if args.major != nil && (ver.Segments()[0] != *args.major || ver.Prerelease() != "") {
 			continue
 		}
 
-		versions = append(versions, v)
+		versions = append(versions, ver)
 	}
 
 	sort.Sort(version.Collection(versions))
@@ -58,18 +58,18 @@ func main() {
 }
 
 func parseArgs() args {
-	as := os.Args[1:]
+	arguments := os.Args[1:]
 
-	if len(as) == 0 {
+	if len(arguments) == 0 {
 		help()
 	}
 
-	parts := strings.Split(as[0], "/")
+	parts := strings.Split(arguments[0], "/")
 	if len(parts) != 2 { //nolint:gomnd
 		help()
 	}
 
-	if len(as) == 1 {
+	if len(arguments) == 1 {
 		return args{
 			owner: parts[0],
 			repo:  parts[1],
@@ -77,7 +77,7 @@ func parseArgs() args {
 		}
 	}
 
-	m, err := strconv.Atoi(as[1])
+	maj, err := strconv.Atoi(arguments[1])
 	if err != nil {
 		help()
 	}
@@ -85,7 +85,7 @@ func parseArgs() args {
 	return args{
 		owner: parts[0],
 		repo:  parts[1],
-		major: &m,
+		major: &maj,
 	}
 }
 
@@ -97,14 +97,14 @@ func help() {
 }
 
 func httpClient() *http.Client {
-	t := os.Getenv("GITHUB_ACCESS_TOKEN")
-	if t == "" {
+	tok := os.Getenv("GITHUB_ACCESS_TOKEN")
+	if tok == "" {
 		return http.DefaultClient
 	}
 
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: t}, //nolint:exhaustivestruct
+		&oauth2.Token{AccessToken: tok}, //nolint:exhaustivestruct
 	)
 
 	return oauth2.NewClient(ctx, ts)
