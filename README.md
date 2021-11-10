@@ -4,7 +4,6 @@
 ![release](https://github.com/acim/github-latest/workflows/release/badge.svg)
 [![Go Reference](https://pkg.go.dev/badge/github.com/acim/github-latest.svg)](https://pkg.go.dev/github.com/acim/github-latest)
 [![Go Report](https://goreportcard.com/badge/github.com/acim/github-latest)](https://goreportcard.com/report/github.com/acim/github-latest)
-[![GitHub](https://img.shields.io/github/license/acim/github-latest)](LICENSE)
 
 Small utility to find out the latest release of a GitHub repository.
 
