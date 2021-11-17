@@ -5,8 +5,7 @@ lint:
 		--disable golint \
 		--disable interfacer \
 		--disable scopelint \
-		--disable maligned \
-		--disable varnamelen
+		--disable maligned
 
 test:
 	@go test ./...
