@@ -11,7 +11,7 @@ jobs:
       - name: Set up go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17.3
+          go-version: 1.17.7
       - name: Set up cache
         uses: actions/cache@v2
         with:
@@ -21,14 +21,14 @@ jobs:
             ${{ runner.os }}-go-
       - name: Set up linters
         run: |
-          go install github.com/sonatype-nexus-community/nancy@latest
           go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+          curl -sSL -o /usr/local/bin/nancy https://github.com/sonatype-nexus-community/nancy/releases/download/v1.0.30/nancy-v1.0.30-linux-amd64 && chmod 755 /usr/local/bin/nancy
       - name: Check out
         uses: actions/checkout@v2
       - name: Lint
         run: |
-          go list -json -m all | nancy sleuth
           make lint
+          go list -json -m all | nancy sleuth
       - name: Build
         run: |
           go build .
