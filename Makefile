@@ -2,10 +2,7 @@
 
 lint:
 	@golangci-lint run --exclude-use-default=false --enable-all \
-		--disable golint \
-		--disable interfacer \
-		--disable scopelint \
-		--disable maligned
+		--disable exhaustivestruct
 
 test:
 	@go test ./...

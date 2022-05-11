@@ -22,13 +22,13 @@ jobs:
       - name: Set up linters
         run: |
           curl -sSL -o /usr/local/bin/nancy https://github.com/sonatype-nexus-community/nancy/releases/download/v1.0.33/nancy-v1.0.33-linux-amd64 && chmod 755 /usr/local/bin/nancy
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.46.0
       - name: Check out
         uses: actions/checkout@v2
       - name: Lint
         run: |
           make lint
-          go list -json -m all | nancy sleuth
+          go list -json -deps | nancy sleuth
       - name: Build
         run: |
           go build .

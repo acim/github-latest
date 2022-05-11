@@ -104,7 +104,7 @@ func httpClient() *http.Client {
 
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: tok}, //nolint:exhaustivestruct
+		&oauth2.Token{AccessToken: tok}, //nolint:exhaustruct
 	)
 
 	return oauth2.NewClient(ctx, ts)
