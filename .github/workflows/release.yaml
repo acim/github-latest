@@ -8,7 +8,7 @@ on:
 env:
   CMD_PATH: .
   BINARY_NAME: github-latest
-  GO_VERSION: 1.18.2
+  GO_VERSION: 1.20.1
   CGO_ENABLED: 0
 
 jobs:
@@ -19,8 +19,8 @@ jobs:
         goos: [linux, windows, darwin]
         goarch: [arm64, amd64]
     steps:
-      - uses: actions/checkout@v2
-      - uses: wangyoucao577/go-release-action@v1.14
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1.36
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
