@@ -1,6 +1,6 @@
 module github.com/acim/github-latest
 
-go 1.17
+go 1.18
 
 require (
 	github.com/google/go-github/v32 v32.1.0
