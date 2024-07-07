@@ -10,5 +10,5 @@ require (
 
 require (
 	github.com/google/go-querystring v1.1.0 // indirect
-	golang.org/x/crypto v0.24.0 // indirect
+	golang.org/x/crypto v0.25.0 // indirect
 )
