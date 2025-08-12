@@ -14,6 +14,6 @@ jobs:
     needs: check
     steps:
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Build
         run: go build .
