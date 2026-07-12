@@ -5,13 +5,18 @@ on:
   pull_request:
 
 jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: raven-actions/actionlint@v2
   check:
     uses: ectobit/reusable-workflows/.github/workflows/go-check.yaml@main
     with:
       test-command: make test
   build:
     runs-on: ubuntu-latest
-    needs: check
+    needs: [actionlint, check]
     steps:
       - name: Check out
         uses: actions/checkout@v7
