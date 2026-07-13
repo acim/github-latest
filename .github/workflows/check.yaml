@@ -8,7 +8,7 @@ jobs:
   actionlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: raven-actions/actionlint@v2
   check:
     uses: ectobit/reusable-workflows/.github/workflows/go-check.yaml@main
