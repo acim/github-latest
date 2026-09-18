@@ -1,7 +1,14 @@
-.PHONY: lint test testv test-cov update
+.PHONY: lint check test testv test-cov update
 
 lint:
 	@golangci-lint run
+
+# Mirrors the static gates of ectobit/reusable-workflows go-check.yaml in the
+# same order; update both together. Run before every push, with the affected
+# tests. Tests are separate because CI runs them in its own job.
+check: lint
+	govulncheck ./...
+	go fix -diff ./...
 
 test:
 	@go test ./...
