@@ -8,7 +8,6 @@ on:
 env:
   CMD_PATH: .
   BINARY_NAME: github-latest
-  GO_VERSION: 1.20.1
   CGO_ENABLED: 0
 
 jobs:
@@ -25,7 +24,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          goversion: 'https://golang.org/dl/go${{ env.GO_VERSION }}.linux-amd64.tar.gz'
+          # Builds with the go directive from go.mod so the release toolchain
+          # cannot drift from the module floor.
+          goversion: go.mod
           project_path: '${{ env.CMD_PATH }}'
           ldflags: -s -w
           build_flags: -a -installsuffix cgo
